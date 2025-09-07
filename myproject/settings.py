@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ip_tracking',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ip_tracking.middleware.LogIPMiddleware',
     'ip_tracking.middleware.LogIPMiddleware',
 ]
 
@@ -79,6 +81,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
+
+# Scheduling task setting
+
+CELERY_BEAT_SCHEDULE = {
+    'detect_anomalies_every_hour': {
+        'task': 'ip_tracking.tasks.detect_anomalies',
+        'schedule': 3600.0,  # Every hour (3600 seconds)
+    },
 }
 
 
@@ -119,3 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Redis settings
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis server running locally
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
