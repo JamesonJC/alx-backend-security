@@ -1,4 +1,4 @@
-#!/workspaces/alx-backend-security/venv/bin/python3
+#!/root/alx-backend-security/venv/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
