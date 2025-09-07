@@ -1,0 +1,7 @@
+Django==3.0.14
+django-ipware==3.0.0
+django-ratelimit==3.0.0
+django-ipgeolocation==1.1.0 # or geopy==2.2.0 
+Celery==5.2.7
+redis==4.3.4
+scikit-learn==1.1.2
